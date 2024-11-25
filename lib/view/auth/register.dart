@@ -1,35 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:week6/view/auth/register.dart';
 
-class LoginScreens extends StatefulWidget {
-  const LoginScreens ({super.key});
+import 'login.dart';
+
+class SignUpScreens extends StatefulWidget {
+  const SignUpScreens ({super.key});
 
   @override
-  State<LoginScreens > createState() => _LoginScreensState();
+  State<SignUpScreens> createState() => _SignUpScreensState();
 }
 
-class _LoginScreensState extends State<LoginScreens> {
+class _SignUpScreensState extends State<SignUpScreens> {
   bool showPass = false;
-  final fromState = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  //====== Validate ======//
-  bool isEmailValid(String email) {
-    RegExp
-    regex = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
-    );
-    return
-      regex.hasMatch(email);
-  }
-
-  void login() {
-    if (fromState.currentState!.validate()) {
-      debugPrint(emailController.text);
-      debugPrint(passwordController.text);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +28,7 @@ class _LoginScreensState extends State<LoginScreens> {
               children: [
                 //===== Images Login =====
                 Image.asset(
-                  'assets/images/login1.png',
+                  'assets/images/register.png',
                   width: size.width * 0.7,
                 ),
                 const SizedBox(height: 10.0),
@@ -57,7 +38,7 @@ class _LoginScreensState extends State<LoginScreens> {
                   child: Row(
                     children: [
                       Text(
-                        "Login",
+                        "Sign Up",
                         style: TextStyle(
                           fontSize: 30.0,
                           color: Colors.lightBlue,
@@ -69,24 +50,12 @@ class _LoginScreensState extends State<LoginScreens> {
                 const SizedBox(height: 10.0),
                 //===== Form Login =====
                 Form(
-                  key: fromState,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //===== Enter field email =====
                       TextFormField(
-                        controller: emailController,
                         keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if(value!.isEmpty){
-                            debugPrint('password is empty');
-                            return 'password is empty';
-                          }else if(!isEmailValid(value)){
-                            debugPrint('Error email');
-                            return 'Error email';
-                          }
-                          return null;
-                        },
                         decoration: InputDecoration(
                             hintText: 'Enter your email or username',
                             label: const Text('Email or password'),
@@ -109,16 +78,8 @@ class _LoginScreensState extends State<LoginScreens> {
                       const SizedBox(height: 10.0),
                       //===== Enter field password =====
                       TextFormField(
-                        controller: passwordController,
                         keyboardType: TextInputType.text,
                         obscureText: !showPass,
-                        validator: (value) {
-                          if(value!.isEmpty) {
-                            debugPrint('password is empty');
-                            return 'password is empty';
-                          }
-                          return null;
-                        },
                         decoration: InputDecoration(
                             hintText: 'Enter your password',
                             label: const Text('Password'),
@@ -151,9 +112,6 @@ class _LoginScreensState extends State<LoginScreens> {
                       const SizedBox(height: 10.0),
                       //===== Button Submit Login =====
                       InkWell(
-                          onTap: () {
-                            login();
-                          },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
                           height: 55.0,
@@ -189,7 +147,7 @@ class _LoginScreensState extends State<LoginScreens> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Don't have an account?",
+                      "Already have account?",
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.black54,
@@ -200,11 +158,11 @@ class _LoginScreensState extends State<LoginScreens> {
                       onTap: () {
                         setState(() {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const SignUpScreens()));
+                              MaterialPageRoute(builder: (context) => const LoginScreens()));
                         });
                       },
                       child: const Text(
-                        'Sign Up',
+                        'Login',
                         style: TextStyle(
                           fontSize: 18.0,
                           color: Colors.orange,
